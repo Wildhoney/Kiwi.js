@@ -12,8 +12,7 @@ module.exports = function(config) {
             'project/services/*.js',
             'module/Kiwi.js',
             'tests/Spec.js',
-            'project/**/fixtures/*',
-            'tests/**/*.Test.js'
+            'project/**/fixtures/*'
         ],
         reporters: ['progress'],
         port: 9876,

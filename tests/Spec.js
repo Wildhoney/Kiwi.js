@@ -67,4 +67,17 @@ describe('Kiwi Module', function() {
 
     });
 
+    describe('Directives', function() {
+
+        it('Should be able to switch city when clicked;', function() {
+
+            var directive = kiwi.directive.create('city');
+            expect(directive.scope.cityName).toEqual('London');
+            directive.html.triggerHandler('click');
+            expect(directive.scope.cityName).toEqual('Moscow');
+
+        });
+
+    });
+
 });
