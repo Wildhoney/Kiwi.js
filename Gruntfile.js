@@ -29,6 +29,17 @@ module.exports = function(grunt) {
                 background: false,
                 browsers: ['Firefox', 'PhantomJS']
             }
+        },
+
+        /**
+         * @property copy
+         * @type {Object}
+         */
+        copy: {
+            main: {
+                src: 'module/Kiwi.js',
+                dest: 'dist/kiwi.js'
+            }
         }
 
     });
@@ -38,7 +49,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('test', ['karma', 'jshint']);
-    grunt.registerTask('build', ['copy', 'uglify']);
+    grunt.registerTask('build', ['karma', 'jshint', 'copy']);
     grunt.registerTask('default', ['jshint', 'karma']);
 
 };

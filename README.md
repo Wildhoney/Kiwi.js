@@ -19,7 +19,7 @@ Dependencies
  * [Karma](http://karma-runner.github.io/0.12/index.html) for running the tests;
  * [Karma Preprocessor](https://github.com/karma-runner/karma-html2js-preprocessor) for adding fixture support;
 
-First Look
+Example
 -------
 
 In order to demonstrate Kiwi.js, consider your basic controller test which requires injecting your `$rootScope`, instantiating a new `scope` and then instantiating your controller with the `scope` instance:

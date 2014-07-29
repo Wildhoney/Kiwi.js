@@ -8,7 +8,7 @@
   "description": "DRY interface for Angular.js tests in Jasmine/Karma.",
   "main": "dist/kiwi.js",
   "keywords": [
-    "angualar",
+    "angular",
     "tests",
     "jasmine",
     "karma"
