@@ -279,6 +279,10 @@
                     tryFlush($timeout);
                     tryFlush($httpBackend);
 
+                    try {
+                        $interval.flush();
+                    } catch (e) {}
+
                 });
 
                 $window.waitsFor(function waitsFor() {
