@@ -50,6 +50,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['karma', 'jshint']);
     grunt.registerTask('build', ['karma', 'jshint', 'copy']);
-    grunt.registerTask('default', ['jshint', 'karma']);
+    grunt.registerTask('default', ['karma', 'jshint', 'copy']);
 
 };
