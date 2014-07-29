@@ -1,6 +1,6 @@
 (function($angular) {
 
-    $angular.module('kiwiApp').controller('KiwiController', function KiwiController($scope, $q, $timeout, Data) {
+    $angular.module('kiwiApp').controller('PeopleController', function PeopleController($scope, $q, $timeout, Data) {
 
         $scope.people = [];
 

@@ -10,9 +10,9 @@ describe('Kiwi Module', function() {
 
     describe('Controllers', function() {
 
-        it('Should be able to change the name from "Adam" to "Maria";', function() {
+        it('Should be able to fetch all the people;', function() {
 
-            var controller = kiwi.controller.create('KiwiController', {
+            var controller = kiwi.controller.create('PeopleController', {
                 Data: kiwi.controller.fixture('people')
             });
 
@@ -39,6 +39,31 @@ describe('Kiwi Module', function() {
             });
 
         });
+
+    });
+
+    describe('Services', function() {
+
+        it('Should be able to fetch all the pets;', inject(function(PetsService) {
+
+            var fixture = kiwi.service.fixture('pets');
+            kiwi.http.when('GET', '/pets').respond(fixture);
+
+            expect(PetsService.pets.length).toEqual(0);
+            expect(typeof PetsService.getPets).toEqual('function');
+
+            kiwi.async(function(done) {
+
+                PetsService.getPets().then(function(collection) {
+
+                    expect(PetsService.pets.length).toEqual(5);
+                    done();
+
+                });
+
+            });
+
+        }));
 
     });
 
