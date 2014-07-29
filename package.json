@@ -1,0 +1,26 @@
+{
+  "name": "kiwi-js",
+  "version": "0.1.0",
+  "description": "DRY interface for Angular.js tests in Jasmine/Karma.",
+  "main": "dist/kiwi.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wildhoney/Kiwi.js.git"
+  },
+  "keywords": [
+    "karma",
+    "angular",
+    "tests",
+    "dry",
+    "jasmine"
+  ],
+  "author": "Adam Timberlake <adam.timberlake@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wildhoney/Kiwi.js/issues"
+  },
+  "homepage": "https://github.com/Wildhoney/Kiwi.js"
+}
