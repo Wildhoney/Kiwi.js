@@ -254,15 +254,30 @@
                 done = true;
             };
 
+            /**
+             * @method tryFlush
+             * @param service {Object}
+             * @return {void}
+             */
+            var tryFlush = function tryFlush(service) {
+
+                try {
+                    service.flush();
+                }
+                catch (exception) {}
+
+            };
+
             inject(function inject($timeout, $interval, $httpBackend) {
 
                 $window.runs(function runs() {
 
                     // Invokes the specified test method and flushes the necessary services.
                     testFn(isDone);
-                    $timeout.flush();
-                    $interval.flush();
-                    $httpBackend.flush();
+
+                    tryFlush($interval);
+                    tryFlush($timeout);
+                    tryFlush($httpBackend);
 
                 });
 
