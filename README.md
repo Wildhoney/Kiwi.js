@@ -10,9 +10,7 @@ Kiwi.js
 Purpose
 -------
 
-Kiwi.js attempts to provide a DRY interface for your Jasmine/Karma unit tests &ndash; requiring less code to write your tests, and making them easier to read.
-
-It is a wrapper around the [Jasmine](http://jasmine.github.io/) test suite.
+Kiwi.js attempts to provide a DRY interface for your Jasmine/Karma unit tests &ndash; requiring less code to write your tests, and making them easier to read. It is a wrapper around the [Jasmine](http://jasmine.github.io/) test suite.
 
 Dependencies
 -------
@@ -35,7 +33,7 @@ inject(function($rootScope, controller) {
 });
 ```
 
-With Kiwi.js you can write the above code in one line and it is a lot more intuitive:
+With Kiwi.js you can write the above code in one line and it is **much** more intuitive:
 
 ```javascript
 var controller = kiwi.controller.create('KiwiController');
@@ -44,19 +42,21 @@ var controller = kiwi.controller.create('KiwiController');
 Fixtures
 --------
 
-Loading a fixture requires the `[karma-html2js-preprocessor](https://github.com/karma-runner/karma-html2js-preprocessor)` module &ndash; follow the instructions there for modifying your Karma configuration file.
+Loading a fixture requires the [`karma-html2js-preprocessor`](https://github.com/karma-runner/karma-html2js-preprocessor) module &ndash; follow the instructions there for modifying your Karma configuration file.
 
 By default the fixtures are configured to point to a specific location &ndash; likely you'll want to change that, and that can be done in the `beforeEach` hook:
 
 ```javascript
 beforeEach(function() {
+
     kiwi.service.path('project/services/fixtures/{{name}}.json');
     kiwi.directive.path('project/directives/fixtures/{{name}}.html');
     kiwi.controller.path('project/controllers/fixtures/{{name}}.json');
+
 });
 ```
 
-Syntax-wise the `path` method accepts that is parsed by the `[$interpolate](https://docs.angularjs.org/api/ng/service/$interpolate)` service and therefore the `{{name}}` will become the property that is passed in when you're reading a fixture.
+Syntax-wise the `path` method accepts a string that is parsed using the [`$interpolate`](https://docs.angularjs.org/api/ng/service/$interpolate) service and therefore the `{{name}}` will become the property that is passed in when you're reading a fixture.
 
 Once you've configured your Karma configuration and paths above, you can load a fixture for a controller, service, or directive with ease:
 
@@ -80,9 +80,7 @@ Injecting dependencies can be achieved with the second argument of the `create` 
 
 ```javascript
 var controller = kiwi.controller.create('PeopleController', {
-
     PeopleService: function PeopleServiceMock() {}
-
 });
 ```
 
@@ -93,9 +91,7 @@ Kiwi.js does not provide a way for services to be created since they exist as in
 
 ```javascript
 it('Should be able to inject the service;', inject(function(PeopleService) {
-
     expect(PeopleService).toBeDefined();
-
 });
 ```
 
