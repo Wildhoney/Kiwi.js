@@ -3,7 +3,7 @@
  * @author Adam Timberlake
  * @link https://github.com/Wildhoney/Kiwi.js
  */
-(function Kiwi($window) {
+(function Kiwi($window, $angular) {
 
     "use strict";
 
@@ -140,14 +140,15 @@
              */
             create: function create(name) {
 
-                var directive = '', isolatedScope = false,
-                    path      = '', pathTemplate  = this.pathTemplate;
+                var path = '', pathTemplate  = this.pathTemplate;
 
                 inject(function inject($interpolate) {
                     path = $interpolate(pathTemplate)({ name: name });
                 });
 
-                var html = $window.__html__[path];
+                var directive = '',
+                    html      = $window.__html__[path],
+                    scopes    = [];
 
                 inject(function inject($rootScope, $compile) {
 
@@ -155,8 +156,21 @@
                     directive = $compile(html)(scope);
                     scope.$digest();
 
-                    // Determine if the directive is an isolated scope as defined by {}.
-                    isolatedScope = !!(directive.hasClass('ng-isolate-scope'));
+                    $angular.forEach(directive, function(directive) {
+
+                        if (!directive || directive.length) {
+                            return;
+                        }
+
+                        // Determine if the directive is an isolated scope as defined by {}.
+                        var element    = $angular.element(directive),
+                            isIsolated = !!(element.hasClass('ng-isolate-scope')),
+                            scope      = element.scope();
+
+                        // Push the scope into the array, detecting first whether it's an isolated scope.
+                        scopes.push(!isIsolated ? scope : scope.$$childHead);
+
+                    });
 
                 });
 
@@ -166,7 +180,7 @@
                      * @property scope
                      * @type {Object}
                      */
-                    scope: !isolatedScope ? directive.scope() : directive.scope().$$childHead,
+                    scope: (scopes.length === 1) ? scopes[0] : scopes,
 
                     /**
                      * @property html
@@ -277,45 +291,8 @@
             testFn();
             kiwi.flush();
 
-        },
-
-        /**
-         * Responsible for mimicking the behaviour of the latest Jasmine release where the `done` variable
-         * is passed into the assertion method, and invoked when everything has been completed.
-         *
-         * @method async
-         * @param testFn {Function}
-         * @return {void}
-         */
-        async: function async(testFn) {
-
-            var done = false;
-
-            /**
-             * @method isDone
-             * @return {void}
-             */
-            var isDone = function isDone() {
-                done = true;
-            };
-
-            $window.runs(function runs() {
-
-                // Invokes the specified test method and flushes the necessary services.
-                testFn(isDone);
-                kiwi.flush();
-
-            });
-
-            $window.waitsFor(function waitsFor() {
-
-                // We're all done, so the test can run its assertions!
-                return done;
-
-            });
-
         }
 
     };
 
-})(window);
+})(window, window.angular);
