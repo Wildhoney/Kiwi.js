@@ -1,6 +1,6 @@
 {
   "name": "kiwi-js",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "DRY interface for Angular.js tests in Jasmine/Karma.",
   "main": "dist/kiwi.js",
   "scripts": {

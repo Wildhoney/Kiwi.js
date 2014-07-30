@@ -291,7 +291,9 @@
             testFn();
             kiwi.flush();
 
-        }
+        },
+
+        test: {}
 
     };
 
