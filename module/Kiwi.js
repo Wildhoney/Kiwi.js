@@ -277,43 +277,6 @@
             testFn();
             kiwi.flush();
 
-        },
-
-        /**
-         * Responsible for mimicking the behaviour of the latest Jasmine release where the `done` variable
-         * is passed into the assertion method, and invoked when everything has been completed.
-         *
-         * @method async
-         * @param testFn {Function}
-         * @return {void}
-         */
-        async: function async(testFn) {
-
-            var done = false;
-
-            /**
-             * @method isDone
-             * @return {void}
-             */
-            var isDone = function isDone() {
-                done = true;
-            };
-
-            $window.runs(function runs() {
-
-                // Invokes the specified test method and flushes the necessary services.
-                testFn(isDone);
-                kiwi.flush();
-
-            });
-
-            $window.waitsFor(function waitsFor() {
-
-                // We're all done, so the test can run its assertions!
-                return done;
-
-            });
-
         }
 
     };

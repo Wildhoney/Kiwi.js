@@ -17,24 +17,14 @@ describe('Kiwi Module', function() {
             });
 
             expect(controller.people.length).toEqual(0);
+            controller.getPeople();
 
-            kiwi.async(function(done) {
+            kiwi.run(function() {
 
                 expect(typeof controller.getPeople).toEqual('function');
-
-                controller.getPeople().then(function(collection) {
-
-                    expect(collection.length).toEqual(2);
-
-                    expect(collection[0].name).toEqual('Adam');
-                    expect(collection[1].name).toEqual('Maria');
-
-                    expect(controller.people[0].name).toEqual('Adam');
-                    expect(controller.people[1].name).toEqual('Maria');
-
-                    done();
-
-                });
+                expect(controller.people.length).toEqual(2);
+                expect(controller.people[0].name).toEqual('Adam');
+                expect(controller.people[1].name).toEqual('Maria');
 
             });
 
@@ -52,15 +42,10 @@ describe('Kiwi Module', function() {
             expect(PetsService.pets.length).toEqual(0);
             expect(typeof PetsService.getPets).toEqual('function');
 
-            kiwi.async(function(done) {
+            PetsService.getPets();
 
-                PetsService.getPets().then(function(collection) {
-
-                    expect(PetsService.pets.length).toEqual(5);
-                    done();
-
-                });
-
+            kiwi.run(function() {
+                expect(PetsService.pets.length).toEqual(5);
             });
 
         }));
