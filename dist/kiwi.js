@@ -235,6 +235,51 @@
         },
 
         /**
+         * @property flush
+         * @type {Object}
+         */
+        flush: function flush() {
+
+            /**
+             * @method tryFlush
+             * @param service {Object}
+             * @return {void}
+             */
+            var tryFlush = function tryFlush(service) {
+
+                try {
+                    service.flush();
+                }
+                catch (exception) {}
+
+            };
+
+            inject(function inject($timeout, $interval, $httpBackend) {
+
+                tryFlush($interval);
+                tryFlush($timeout);
+                tryFlush($httpBackend);
+
+            });
+
+        },
+
+        /**
+         * Responsible for invoking a method callback and automatically flushing all async servicse.
+         *
+         * @method run
+         * @param testFn {Function}
+         * @return {void}
+         */
+        run: function run(testFn) {
+
+            kiwi.flush();
+            testFn();
+            kiwi.flush();
+
+        },
+
+        /**
          * Responsible for mimicking the behaviour of the latest Jasmine release where the `done` variable
          * is passed into the assertion method, and invoked when everything has been completed.
          *
@@ -254,39 +299,18 @@
                 done = true;
             };
 
-            /**
-             * @method tryFlush
-             * @param service {Object}
-             * @return {void}
-             */
-            var tryFlush = function tryFlush(service) {
+            $window.runs(function runs() {
 
-                try {
-                    service.flush();
-                }
-                catch (exception) {}
+                // Invokes the specified test method and flushes the necessary services.
+                testFn(isDone);
+                kiwi.flush();
 
-            };
+            });
 
-            inject(function inject($timeout, $interval, $httpBackend) {
+            $window.waitsFor(function waitsFor() {
 
-                $window.runs(function runs() {
-
-                    // Invokes the specified test method and flushes the necessary services.
-                    testFn(isDone);
-
-                    tryFlush($interval);
-                    tryFlush($timeout);
-                    tryFlush($httpBackend);
-
-                });
-
-                $window.waitsFor(function waitsFor() {
-
-                    // We're all done, so the test can run its assertions!
-                    return done;
-
-                });
+                // We're all done, so the test can run its assertions!
+                return done;
 
             });
 
