@@ -180,7 +180,7 @@
                      * @property scope
                      * @type {Object}
                      */
-                    scope: (scopes.length === 1) ? scopes[0] : scopes,
+                    scope: scopes.length === 1 ? scopes[0] : scopes,
 
                     /**
                      * @property html
