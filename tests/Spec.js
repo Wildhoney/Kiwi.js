@@ -63,6 +63,17 @@ describe('Kiwi Module', function() {
 
         });
 
+        it('Should be able to find the multiple root scopes;', function() {
+
+            var directive = kiwi.directive.create('cities');
+            expect(directive.scope[0].cityName).toEqual('London');
+            expect(directive.scope[1].cityName).toEqual('London');
+            expect(directive.scope[2].cityName).toEqual('London');
+            directive.html.triggerHandler('click');
+            expect(directive.scope[0].cityName).toEqual('Moscow');
+
+        });
+
     });
 
 });
