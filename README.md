@@ -117,3 +117,14 @@ directive.html.triggerHandler('click');
 ```
 
 In initiating the `pets` directive, the **pets.html** fixture will be read from the fixture path and then compiled with a directive.
+
+Often when creating a directive you will specify the `templateUrl` as opposed to embedding the HTML directive in the `template` property &ndash; especially if it's quite a verbose directive. For this you will need to mock the `templateUrl` request and provide a fixture as a replacement. Kiwi allows you to do this in the `directive.create` method:
+
+```javascript
+var directive = kiwi.directive.create('date-picker', {
+    mock: 'views/modules/date-picker.html',
+    withFixture: 'date-picker-template'
+});
+```
+
+In the above example and as is standard with Kiwi.js, the `mock` parameter is the relative URL of the `templateUrl` property in the directive, and the `withFixture` property is what it will be replaced with &ndash; using the same format as when loading fixtures in other places.
