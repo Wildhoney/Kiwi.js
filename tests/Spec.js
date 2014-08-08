@@ -74,6 +74,18 @@ describe('Kiwi Module', function() {
 
         });
 
+        it('Should be able to load a directive when using `templateUrl`;', function() {
+
+            var directive = kiwi.directive.create('town', {
+                withFixture: 'town-template',
+                mock: 'project/templates/town-template.html'
+            });
+
+            expect(directive.html[0].innerHTML.match(/Town name is/ig)).toBeTruthy();
+            expect(directive.scope.name).toEqual('Long Eaton');
+
+        });
+
     });
 
 });

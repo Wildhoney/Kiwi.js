@@ -137,24 +137,47 @@
             /**
              * @method create
              * @param name {String}
+             * @param templateOptions {Object}
+             * @return {void}
              */
-            create: function create(name) {
+            create: function create(name, templateOptions) {
 
-                var path = '', pathTemplate  = this.pathTemplate;
+                var path = '', pathTemplate  = this.pathTemplate, templatePath = '';
 
                 inject(function inject($interpolate) {
+
                     path = $interpolate(pathTemplate)({ name: name });
+
+                    if (templateOptions) {
+                        templatePath = $interpolate(pathTemplate)({ name: templateOptions.withFixture });
+                    }
+
                 });
+
+                if (templatePath) {
+
+                    // Create the mock request for the `templateUrl` property.
+                    kiwi.http.when('GET', templateOptions.mock).respond(200, $window.__html__[templatePath]);
+
+                }
 
                 var directive = '',
                     html      = $window.__html__[path],
                     scopes    = [];
 
-                inject(function inject($rootScope, $compile) {
+                inject(function inject($rootScope, $compile, $httpBackend) {
 
                     var scope = $rootScope.$new();
                     directive = $compile(html)(scope);
                     scope.$digest();
+
+                    if (templateOptions) {
+
+                        // Flush the backend if the developer has provided a second argument for
+                        // providing a fixture for the `templateUrl` property.
+                        $httpBackend.flush();
+
+                    }
 
                     $angular.forEach(directive, function(directive) {
 

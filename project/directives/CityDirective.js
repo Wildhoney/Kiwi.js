@@ -1,6 +1,6 @@
 (function($angular) {
 
-    $angular.module('kiwiApp').directive('city', function PetsService($http) {
+    $angular.module('kiwiApp').directive('city', function PetsService() {
 
         return {
 
